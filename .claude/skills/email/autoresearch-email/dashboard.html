@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoresearch: Email Skill</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 24px; margin-bottom: 8px; }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status.running { background: #d4edda; color: #155724; }
+        .status.complete { background: #cce5ff; color: #004085; }
+        .status.idle { background: #e2e3e5; color: #383d41; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .score-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .card h3 { font-size: 12px; color: #6c757d; text-transform: uppercase; margin-bottom: 8px; }
+        .card .value { font-size: 32px; font-weight: 700; }
+        .card .value.baseline { color: #6c757d; }
+        .card .value.current { color: #28a745; }
+        .card .value.best { color: #007bff; }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #dee2e6; }
+        th { font-size: 12px; color: #6c757d; text-transform: uppercase; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge.keep { background: #d4edda; color: #155724; }
+        .badge.discard { background: #f8d7da; color: #721c24; }
+        .badge.baseline { background: #cce5ff; color: #004085; }
+        .eval-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .eval-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .eval-item .name { font-size: 13px; margin-bottom: 4px; }
+        .eval-item .bar-container {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .eval-item .bar {
+            height: 100%;
+            background: #28a745;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .eval-item .percent { font-size: 12px; color: #6c757d; margin-top: 4px; }
+        .refresh-note { font-size: 12px; color: #6c757d; margin-top: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>Autoresearch: Email Skill</h1>
+            <span class="status idle" id="status">Idle</span>
+        </div>
+        <div id="experiment-count" style="font-size: 14px; color: #6c757d;">Experiment: 0</div>
+    </div>
+
+    <div class="score-cards">
+        <div class="card">
+            <h3>Baseline</h3>
+            <div class="value baseline" id="baseline-score">--</div>
+        </div>
+        <div class="card">
+            <h3>Current</h3>
+            <div class="value current" id="current-score">--</div>
+        </div>
+        <div class="card">
+            <h3>Best</h3>
+            <div class="value best" id="best-score">--</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="scoreChart" height="80"></canvas>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+        <h3 style="margin-bottom: 12px;">Eval Breakdown</h3>
+        <div class="eval-grid" id="eval-breakdown"></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom: 12px;">Experiment Log</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Score</th>
+                    <th>Pass Rate</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="experiment-log"></tbody>
+        </table>
+    </div>
+
+    <p class="refresh-note">Auto-refreshes every 10 seconds</p>
+
+    <script>
+        let chart = null;
+
+        async function fetchData() {
+            try {
+                const response = await fetch('results.json?' + Date.now());
+                return await response.json();
+            } catch (e) {
+                console.error('Failed to fetch results:', e);
+                return null;
+            }
+        }
+
+        function updateDashboard(data) {
+            if (!data) return;
+
+            // Status
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = data.status === 'running' ? 'Running...' :
+                                   data.status === 'complete' ? 'Complete' : 'Idle';
+            statusEl.className = 'status ' + data.status;
+
+            // Experiment count
+            document.getElementById('experiment-count').textContent =
+                'Experiment: ' + data.current_experiment;
+
+            // Scores
+            document.getElementById('baseline-score').textContent =
+                data.baseline_score !== null ? data.baseline_score.toFixed(1) + '%' : '--';
+
+            const currentScore = data.experiments.length > 0 ?
+                data.experiments[data.experiments.length - 1].pass_rate : null;
+            document.getElementById('current-score').textContent =
+                currentScore !== null ? currentScore.toFixed(1) + '%' : '--';
+
+            document.getElementById('best-score').textContent =
+                data.best_score !== null ? data.best_score.toFixed(1) + '%' : '--';
+
+            // Chart
+            if (data.experiments.length > 0) {
+                const labels = data.experiments.map(e => 'Exp ' + e.id);
+                const scores = data.experiments.map(e => e.pass_rate);
+                const colors = data.experiments.map(e =>
+                    e.status === 'baseline' ? '#007bff' :
+                    e.status === 'keep' ? '#28a745' : '#dc3545'
+                );
+
+                if (chart) {
+                    chart.data.labels = labels;
+                    chart.data.datasets[0].data = scores;
+                    chart.data.datasets[0].backgroundColor = colors;
+                    chart.update();
+                } else {
+                    const ctx = document.getElementById('scoreChart').getContext('2d');
+                    chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Pass Rate %',
+                                data: scores,
+                                backgroundColor: colors,
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { beginAtZero: true, max: 100 }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Eval breakdown
+            const evalContainer = document.getElementById('eval-breakdown');
+            evalContainer.innerHTML = data.eval_breakdown.map(ev => {
+                const percent = ev.total > 0 ? (ev.pass_count / ev.total * 100) : 0;
+                return `
+                    <div class="eval-item">
+                        <div class="name">${ev.name}</div>
+                        <div class="bar-container">
+                            <div class="bar" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="percent">${ev.pass_count}/${ev.total} (${percent.toFixed(0)}%)</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Experiment log
+            const logContainer = document.getElementById('experiment-log');
+            logContainer.innerHTML = data.experiments.map(exp => `
+                <tr>
+                    <td>${exp.id}</td>
+                    <td>${exp.score}/${exp.max_score}</td>
+                    <td>${exp.pass_rate.toFixed(1)}%</td>
+                    <td><span class="badge ${exp.status}">${exp.status}</span></td>
+                    <td>${exp.description}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function refresh() {
+            const data = await fetchData();
+            updateDashboard(data);
+        }
+
+        refresh();
+        setInterval(refresh, 10000);
+    </script>
+</body>
+</html>

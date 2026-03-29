@@ -1,0 +1,49 @@
+{
+  "skill_name": "email",
+  "status": "complete",
+  "current_experiment": 3,
+  "baseline_score": 76.7,
+  "best_score": 100.0,
+  "experiments": [
+    {
+      "id": 0,
+      "score": 23,
+      "max_score": 30,
+      "pass_rate": 76.7,
+      "status": "baseline",
+      "description": "Original skill — no changes"
+    },
+    {
+      "id": 1,
+      "score": 30,
+      "max_score": 30,
+      "pass_rate": 100.0,
+      "status": "keep",
+      "description": "Added rule: reference specific moment/detail, never generic topic labels"
+    },
+    {
+      "id": 2,
+      "score": 30,
+      "max_score": 30,
+      "pass_rate": 100.0,
+      "status": "keep",
+      "description": "Stability check — no changes"
+    },
+    {
+      "id": 3,
+      "score": 30,
+      "max_score": 30,
+      "pass_rate": 100.0,
+      "status": "keep",
+      "description": "Final verification — no changes"
+    }
+  ],
+  "eval_breakdown": [
+    {"name": "Event specificity", "pass_count": 18, "total": 20},
+    {"name": "Clear reason to respond", "pass_count": 20, "total": 20},
+    {"name": "Peer proof in Email 2", "pass_count": 20, "total": 20},
+    {"name": "Specific customer result", "pass_count": 20, "total": 20},
+    {"name": "Soft close in Email 4", "pass_count": 20, "total": 20},
+    {"name": "Personal feel", "pass_count": 15, "total": 20}
+  ]
+}

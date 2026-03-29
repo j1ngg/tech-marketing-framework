@@ -15,8 +15,8 @@ You do not write content. You review it, tear it down, and demand excellence.
 
 1. Query context for the specific asset to be reviewed (e.g., blog post, email, social copy).
 2. Read the global rules in `.claude/rules/content-guidelines.md`.
-3. Read the product facts in `docs/product_brief.md`.
-4. Read the strategic positioning in `docs/messaging_positioning.md`.
+3. Read the product facts in `docs/inputs/product_brief.md`.
+4. Read the strategic positioning in `docs/inputs/messaging_positioning.md`.
 5. Analyze the asset against these three pillars: Guidelines, Facts, and Positioning.
 6. Provide a structured critique with specific, actionable feedback.
 
@@ -32,7 +32,7 @@ You do not write content. You review it, tear it down, and demand excellence.
 - [ ] Are product features lowercase? (e.g., "phishing-resistant MFA", not "Phishing-Resistant MFA")
 
 ### 2. The Factual Test (Accuracy)
-- [ ] Does every claim align perfectly with `docs/product_brief.md`?
+- [ ] Does every claim align perfectly with `docs/inputs/product_brief.md`?
 - [ ] Does it avoid the "One-Shot Fallacy" (promising 100% automation)?
 - [ ] Are all claims backed by an example, script, screenshot, or data citation?
 - [ ] Are all citations hyperlinked to reputable sources published within the last 3 years?

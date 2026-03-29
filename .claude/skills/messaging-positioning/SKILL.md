@@ -14,7 +14,7 @@ There are two modes:
 
 **Discovery Mode (default):** Jing asks the questions below to the room. As the team answers, capture the key points. After each section, summarize what you heard and confirm before moving on. Do not invent answers. Do not fill gaps with assumptions. If a question goes unanswered, flag it as an open item.
 
-**Build Mode:** When Jing says "build it" or "draft it," take everything captured in Discovery and populate `docs/messaging_positioning.md` using the template structure. Then flag any sections that are incomplete because of unanswered questions.
+**Build Mode:** When Jing says "build it" or "draft it," take everything captured in Discovery and populate `docs/inputs/messaging_positioning.md` using the template structure. Then flag any sections that are incomplete because of unanswered questions.
 
 ---
 
@@ -91,7 +91,7 @@ As answers come in, organize them under the section headers above. Use direct qu
 
 ## Transition to Build Mode
 
-When Jing says to build, populate `docs/messaging_positioning.md` with:
+When Jing says to build, populate `docs/inputs/messaging_positioning.md` with:
 
 1. **Positioning table:** One row per context (in the market, within product suite, against each competitor or alternative identified in Section 3).
 2. **Market category:** The chosen category frame, the rationale, and whether this is the default prospect assumption or a deliberate reframe.
