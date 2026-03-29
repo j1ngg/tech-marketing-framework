@@ -2,6 +2,24 @@
 
 A Claude Code project for developer tools marketing. Repeatable skills for content generation, messaging workshops, and autonomous skill optimization.
 
+## Installation
+
+**Prerequisites:** [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
+
+```bash
+# Install Claude Code CLI
+npm install -g @anthropic-ai/claude-code
+
+# Clone this repo
+git clone https://github.com/j1ngg/tech-marketing-framework.git
+cd tech-marketing-framework
+
+# Run Claude Code
+claude
+```
+
+Claude will automatically load the marketing assistant persona and all skills.
+
 ## What This Is
 
 This repo turns Claude Code into a senior product marketer for technical audiences. It provides:
@@ -141,3 +159,7 @@ The skill runs autonomously until stopped or until it hits 95%+ pass rate for 3 
 - Replace adjectives with evidence
 
 See `claude.md` for the full philosophy and `.claude/rules/content-guidelines.md` for writing standards.
+
+## License
+
+MIT
