@@ -44,7 +44,8 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── email/                   # Event follow-up email sequences
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
 │   └── agents/
-│       └── asset-reviewer.md        # Reviews assets against guidelines
+│       ├── asset-reviewer.md        # Reviews assets against guidelines
+│       └── how-they-market.md       # Analyzes how others market
 ├── docs/
 │   ├── inputs/                      # Product-specific data (fill these in)
 │   │   ├── product_brief.md
@@ -149,6 +150,26 @@ Based on Andrej Karpathy's autoresearch methodology, this skill:
 6. Produces an improved SKILL.md, results log, and changelog
 
 The skill runs autonomously until stopped or until it hits 95%+ pass rate for 3 consecutive experiments.
+
+### Researching How Others Market
+
+Use the `how-they-market` agent to analyze how a person, company, or newsletter markets themselves:
+
+```
+Analyze how [company/person/newsletter] markets
+```
+
+The agent researches the target across all channels and produces a structured report:
+
+| Section | What it covers |
+|---------|----------------|
+| Channels | Where they publish (Twitter, LinkedIn, blog, newsletter, YouTube, podcast) |
+| Voice & Tone | How they sound, technical depth, formatting patterns |
+| Content Patterns | Posting cadence, content mix, hooks, what's working |
+| Notable Tactics | 2-4 specific tactics worth learning from |
+| Follow-up Research | Suggested next steps, related accounts to investigate |
+
+Optional: Specify a focus area like "just their Twitter," "how they launch products," or "their newsletter strategy."
 
 ## Philosophy
 
