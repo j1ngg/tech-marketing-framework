@@ -42,9 +42,11 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── social-posts/            # Social media post generator
 │   │   ├── skill-builder/           # Meta-skill for creating new skills/agents
 │   │   ├── email/                   # Event follow-up email sequences
+│   │   ├── ads/                     # Paid ad copy generator
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
 │   └── agents/
 │       ├── asset-reviewer.md        # Reviews assets against guidelines
+│       ├── ads-auditor.md           # Audits ad performance with health scoring
 │       └── how-they-market.md       # Analyzes how others market
 ├── docs/
 │   ├── inputs/                      # Product-specific data (fill these in)
@@ -116,6 +118,34 @@ Key features:
 
 Customer and prospect email types coming soon.
 
+### Generating Paid Ads
+
+Use the `/ads` skill to generate paid ad copy for Google, Meta, and LinkedIn:
+
+```
+/ads
+```
+
+The skill uses a creative matrix approach (Topics x Personas x Angles) to generate targeted variants:
+
+| Dimension | Source |
+|-----------|--------|
+| Topics | Pain points from `messaging_positioning.md` |
+| Personas | Audience segments from `target_personas.md` |
+| Angles | Problem-agitation, social proof, how-to, comparison |
+
+Key features:
+- Reads all `docs/inputs/` files automatically for context
+- Can incorporate fresh competitive research from `how-they-market` runs
+- Platform-specific specs (character limits, image sizes, rules)
+- Generates 3 to 5 variants per platform (quality over quantity)
+- Outputs headlines, descriptions, and image/creative briefs
+
+Supported platforms:
+- Google Ads (Search, Display)
+- Meta (Facebook, Instagram)
+- LinkedIn
+
 ### Building New Skills or Agents
 
 Use the `/skill-builder` skill to design and create new skills or agents:
@@ -159,17 +189,48 @@ Use the `how-they-market` agent to analyze how a person, company, or newsletter 
 Analyze how [company/person/newsletter] markets
 ```
 
-The agent researches the target across all channels and produces a structured report:
+The agent runs parallel web searches across HN, Reddit, LinkedIn, and Twitter, then visits the target's website to extract positioning.
 
 | Section | What it covers |
 |---------|----------------|
 | Channels | Where they publish (Twitter, LinkedIn, blog, newsletter, YouTube, podcast) |
 | Voice & Tone | How they sound, technical depth, formatting patterns |
 | Content Patterns | Posting cadence, content mix, hooks, what's working |
-| Notable Tactics | 2-4 specific tactics worth learning from |
-| Follow-up Research | Suggested next steps, related accounts to investigate |
+| Community Presence | HN and Reddit sentiment and discussions |
+| Notable Tactics | 2 to 4 specific tactics worth learning from |
+| Gaps & Limitations | What couldn't be researched |
+| Follow-Up Research | Suggested next steps, related accounts to investigate |
 
 Optional: Specify a focus area like "just their Twitter," "how they launch products," or "their newsletter strategy."
+
+**Integration with `/ads`:** Research output informs competitive ad angles. Use findings to identify messaging gaps, positioning angles competitors miss, and channel priorities.
+
+### Auditing Ad Performance
+
+Use the `ads-auditor` agent to analyze campaign performance and get optimization recommendations:
+
+```
+Audit my Google Ads performance: [paste metrics or provide file path]
+```
+
+The agent analyzes your data against benchmarks and produces:
+
+| Section | What it covers |
+|---------|----------------|
+| Health Score | 0 to 100 score with letter grade (A through F) |
+| Critical Issues | Problems requiring immediate action |
+| Optimization Opportunities | Improvements ranked by potential impact |
+| What's Working | Keep doing these things |
+| Recommended Actions | Prioritized fixes with effort estimates |
+| Platform Checklist | Pass/fail on platform best practices |
+
+Supported platforms: Google Ads, Meta (Facebook/Instagram), LinkedIn
+
+**Critical thresholds auto-flagged:**
+- CPA exceeding 3x target
+- CTR below 50% of benchmark
+- Frequency > 2.5 (Meta audience fatigue)
+- Learning phase resets
 
 ## Philosophy
 
