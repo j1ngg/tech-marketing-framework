@@ -45,6 +45,7 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── ads/                     # Paid ad copy generator
 │   │   ├── sales-deck/              # B2B sales narrative deck builder
 │   │   ├── blog/                    # SEO/AEO optimized blog post generator
+│   │   ├── blog-image/              # AI-generated featured images (Nano Banana 2)
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
 │   └── agents/
 │       ├── asset-reviewer.md        # Reviews assets against guidelines
@@ -56,7 +57,8 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── target_personas.md
 │   │   ├── messaging_positioning.md
 │   │   ├── competitor_intel.md
-│   │   └── testimonials.md
+│   │   ├── testimonials.md
+│   │   └── brand_guidelines.md
 │   └── reference/                   # Reusable frameworks
 │       └── channel_directory.md
 └── output/                          # Generated assets by type
@@ -231,6 +233,47 @@ The skill supports five blog types, each with its own structure and word count:
 - Code snippets always include comments
 - Follows 2026 SEO/AEO best practices (archetypal phrasing, answer-first structure)
 - Hands off to `/social-posts` skill for promotion
+
+### Generating Blog Featured Images
+
+Use the `/blog-image` skill to generate featured images using Google's Nano Banana 2 model:
+
+```
+/blog-image
+```
+
+The skill reads your blog content and brand guidelines to create on-brand featured images.
+
+**Prerequisites:**
+- Google Gemini API key ([get one here](https://aistudio.google.com/apikey))
+- Python packages: `pip install google-genai pillow`
+
+**Workflow:**
+
+| Step | What Happens |
+|------|--------------|
+| 1 | Checks for `docs/inputs/brand_guidelines.md` (guides you to create one if missing) |
+| 2 | Reads blog content to understand the visual concept |
+| 3 | Constructs prompt from brand style + blog concept |
+| 4 | Generates image via Nano Banana 2 API |
+| 5 | Presents image for approval or refinement |
+
+**Output:**
+- PNG image at 1200x627px
+- SEO alt text (under 125 chars)
+- Prompt used (for iteration)
+
+**Security:** API key is never logged, stored, or displayed. Must be set as environment variable:
+```bash
+export GEMINI_API_KEY="your-key-here"
+```
+
+**Key features:**
+- Brand guidelines integration (creates template if missing)
+- Optional reference image for style matching
+- Refinement loop (up to 5 rounds)
+- Retry with exponential backoff on API failures
+- No text in images (add overlays in post-production)
 
 ### Building New Skills or Agents
 
