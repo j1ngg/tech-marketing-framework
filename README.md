@@ -197,7 +197,7 @@ This structure combats "no decision" paralysis by giving buyers a clear evaluati
 
 ### Writing Blog Posts
 
-Use the `/blog` skill to generate SEO and AEO optimized blog posts:
+Use the `/blog` skill to generate SEO and AEO optimized blog posts with optional tri-publish variants for LinkedIn Pulse and X:
 
 ```
 /blog
@@ -227,12 +227,28 @@ The skill supports five blog types, each with its own structure and word count:
 - Internal linking recommendations (fetches from your domain)
 - Visual callout flags (`[VISUAL: description]`)
 
+**Authority Content gate:**
+
+Before generating, the skill checks that the source content meets the Authority Content bar: an original framework, a contrarian take backed by data, a firsthand breakdown, or a case study with specific numbers. Generic listicles and summarized content get flagged with a request for the real angle.
+
+**Tri-publish strategy:**
+
+The skill asks which surfaces you're publishing to and generates platform-specific variants:
+
+| Surface | What it optimizes for |
+|---------|----------------------|
+| Website/blog | Long-tail keywords, schema markup, internal linking |
+| LinkedIn Pulse | Google indexing via DR 98 domain, LLM citations, custom SEO title and meta description, comment-driving CTA |
+| X article | Algorithmic For You feed, dwell time, quote repost prompt for viral distribution |
+
+LinkedIn Pulse articles are the second most-cited domain in AI-generated responses, with citation rates up 4 to 5x year over year. X articles benefit from the For You feed pushing content to non-followers — 30 to 40% of views come from accounts that don't follow you.
+
 **Key features:**
 - WebSearch for supporting evidence and current statistics
 - Fetches pages from your domain for contextual internal links
 - Code snippets always include comments
 - Follows 2026 SEO/AEO best practices (archetypal phrasing, answer-first structure)
-- Hands off to `/social-posts` skill for promotion
+- Hands off to `/social-posts` skill for short-form promotion
 
 ### Generating Blog Featured Images
 
