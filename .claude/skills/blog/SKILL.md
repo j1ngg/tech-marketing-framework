@@ -26,6 +26,25 @@ Wait for the user to select before proceeding.
 
 ---
 
+## Authority Content Standard
+
+Before gathering inputs, confirm the source content meets the Authority Content bar. Authority Content is what earns distribution on X, rankings on Google via LinkedIn Pulse, and citations from LLMs.
+
+Authority Content must include at least one of:
+- An original framework or model
+- A contrarian take backed by data or direct experience
+- A detailed breakdown of something the author actually built, tested, or measured
+- A case study with specific numbers attached
+
+It must not be:
+- A repackaged "10 tips" listicle
+- A summary of what everyone else is already saying
+- Generic advice without a specific point of view
+
+If the source content doesn't meet this bar, flag it: "This content reads as [generic/listicle/summary]. Authority Content needs a stronger point of view to earn algorithmic distribution and LLM citations. Can you share the original data, frameworks, or contrarian angle behind this?"
+
+---
+
 ## Step 2: Gather Inputs
 
 **Read from repo automatically:**
@@ -50,6 +69,14 @@ Read these files BEFORE asking for additional inputs.
 3. **Internal link domain** — What domain should I pull internal links from? (e.g., `beyondidentity.com/blog` or `docs.example.com`)
 
 4. **Disclosure needed?** — Does this post require a disclosure statement? (e.g., "Full disclosure: I work at [Company]")
+
+5. **Distribution surfaces** — Which surfaces are you publishing to?
+   - [ ] Website/blog only
+   - [ ] Website + LinkedIn Pulse
+   - [ ] Website + X article
+   - [ ] All three (tri-publish)
+
+   If tri-publish or platform variants selected, generate platform-specific versions in Step 4.
 
 Wait for answers before proceeding.
 
@@ -438,6 +465,66 @@ Generate the complete blog post following the type-specific structure below.
 
 ---
 
+## Platform Variants
+
+If the user selected LinkedIn Pulse or X article variants, generate these after the main blog post.
+
+---
+
+### LinkedIn Pulse Variant
+
+LinkedIn Pulse articles are indexed by Google (DR 98) and cited by LLMs at 4 to 5x the rate of a year ago. Optimize for search and LLM extractability.
+
+**Differences from website version:**
+- Add a `**LinkedIn SEO title:**` field (can differ from H1, max 100 chars, front-load keyword)
+- Add a `**LinkedIn meta description:**` field (under 160 chars, keyword-rich)
+- Add a `**LinkedIn CTA:**` at the end — drive comments, not clicks. Example: "What's your experience with [topic]? Drop it in the comments."
+- Add an `**Author bio line:**` at the end: [Name], [Title] at [Company]. Verifiable professional identity improves LLM trust signals.
+
+**LLM citation optimization for LinkedIn Pulse:**
+- Keep paragraphs under 80 words (LLMs extract short, declarative statements)
+- Use H2 sections with archetypal phrasing ("What is X", "How to Y", "X vs Y")
+- Include at least one statistic with a cited source
+- No invented brand terminology without context
+
+Output format:
+
+```
+## LinkedIn Pulse Variant
+
+**LinkedIn SEO title:** [keyword-front-loaded title, max 100 chars]
+**LinkedIn meta description:** [under 160 chars, keyword-rich]
+
+[Full article content — same body as website version, with LinkedIn CTA substituted]
+
+**LinkedIn CTA:** [Comment-driving question or prompt]
+**Author bio line:** [Name], [Title] at [Company]
+```
+
+---
+
+### X Article Variant
+
+X articles benefit from the algorithmic For You feed — 30 to 40% of views come from non-followers. Virality depends on strong engagement in the first 30 to 60 minutes.
+
+**Differences from website version:**
+- Sharper opening hook — first 2 sentences must create enough tension or surprise to stop a scroll
+- More opinionated framing — if the article doesn't make at least some readers disagree, it won't generate quote reposts
+- Add a `**Quote repost prompt:**` at the end — a 1-sentence take that's controversial or insight-dense enough to make someone want to add their own perspective
+- X articles support up to 25K characters; no need to truncate
+
+Output format:
+
+```
+## X Article Variant
+
+[Full article content — same body with sharpened opening hook and more opinionated framing]
+
+**Quote repost prompt:** [1-sentence take designed to provoke substantive reaction — not rage bait, but a real point of view people will want to respond to]
+```
+
+---
+
 ## SEO and AEO Requirements
 
 Apply these to every blog post:
@@ -489,6 +576,13 @@ Output internal linking recommendations:
 - Link to [page title](URL) in the [section name] section
 - Link to [page title](URL) when mentioning [topic]
 ```
+
+### LinkedIn Pulse SEO
+
+When publishing to LinkedIn Pulse, apply these in the publishing settings:
+- Set a custom SEO title in LinkedIn's article settings (separate from the H1)
+- Set a custom meta description (LinkedIn now exposes this in the publishing UI)
+- The article URL inherits LinkedIn's /pulse/ slug with DR 98 — no additional domain authority needed
 
 ### Heading Structure
 - Use archetypal phrasing in H2s: "What is X", "How to Y", "Why Z matters"
@@ -577,6 +671,13 @@ Output the complete blog post with this wrapper:
 - [List of VISUAL callouts from the post]
 
 **Social promotion:** Would you like to generate social posts for this blog? I can hand off to the `/social-posts` skill.
+
+**Tri-publish checklist:**
+- [ ] LinkedIn Pulse variant generated (if selected)
+- [ ] X article variant generated (if selected)
+- [ ] LinkedIn SEO title and meta description set
+- [ ] Quote repost prompt written for X
+- [ ] Author bio line added to LinkedIn version
 ```
 
 ---
@@ -620,19 +721,34 @@ Before delivering, verify the post passes:
 - [ ] Visual callouts flagged where appropriate
 - [ ] Each visual callout has specific description
 
+### Distribution (if tri-publishing)
+- [ ] Content meets Authority Content bar (original framework, contrarian take, real data, or case study with numbers)
+- [ ] LinkedIn Pulse variant has custom SEO title and meta description
+- [ ] LinkedIn Pulse variant ends with comment-driving CTA
+- [ ] X article variant opens with scroll-stopping hook
+- [ ] X article variant includes quote repost prompt
+- [ ] Author bio line included on LinkedIn version
+
 ---
 
-## Handoff to Social
+## Handoff Options
 
 After the blog is complete, ask:
 
-> "Would you like to generate social posts to promote this blog? I can hand off to the `/social-posts` skill with the blog content as the source."
+> "Would you like to generate social posts to promote this content? I can hand off to the `/social-posts` skill."
 
 If yes, provide context to the social-posts skill:
 - Blog title
 - Blog URL (if known) or note it's unpublished
 - Key points to highlight
 - Target audience from the blog
+
+If the user selected tri-publish, also confirm:
+
+> "Here's your publishing checklist:
+> - **Website**: Publish the main blog post with schema markup and internal links
+> - **LinkedIn Pulse**: Use the LinkedIn variant. In LinkedIn's article settings, paste the LinkedIn SEO title and meta description. After publishing, leave a comment to seed conversation.
+> - **X**: Publish the X article variant. After publishing, share the quote repost prompt as a reply or separate post to seed engagement in the first 30 to 60 minutes."
 
 ---
 
