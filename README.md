@@ -46,6 +46,7 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── sales-deck/              # B2B sales narrative deck builder
 │   │   ├── blog/                    # SEO/AEO optimized blog post generator
 │   │   ├── image/                   # Marketing image generator (MCP)
+│   │   ├── launch-roundup/          # Weekly feature announcement pipeline
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
 │   └── agents/
 │       ├── asset-reviewer.md        # Reviews assets against guidelines
@@ -250,6 +251,33 @@ LinkedIn Pulse articles are the second most-cited domain in AI-generated respons
 - Code snippets always include comments
 - Follows 2026 SEO/AEO best practices (archetypal phrasing, answer-first structure)
 - Hands off to `/social-posts` skill for short-form promotion
+
+### Weekly Launch Roundup
+
+Use the `/launch-roundup` skill to generate a complete feature announcement package from recent MRs:
+
+```
+/launch-roundup
+```
+
+The skill runs a five step pipeline:
+
+| Step | Output | Mode |
+|------|--------|------|
+| 1 | Feature summary from MRs | Automatic |
+| 2 | Slack announcement | **Approval gate** (review with PM/EM) |
+| 3 | Feature announcement blog | Autonomous |
+| 4 | LinkedIn posts (brand + personal) | Autonomous |
+| 5 | LinkedIn carousel (PPTX) | Autonomous |
+
+After you provide the MR source and approve the Slack copy, steps 3 through 5 run without interruption. All outputs land in `output/launch-roundups/{product-name}-{date}/`.
+
+**Key features:**
+- Single approval gate after Slack copy (your PM/EM sanity check)
+- Blog follows full `/blog` skill rules (SEO, AEO, FAQ, schema markup)
+- LinkedIn posts follow full `/social-posts` skill rules (brand + personal)
+- Carousel generates a PPTX via `python-pptx`, styled from brand guidelines
+- Adapts structure based on feature count (1 feature vs 5+ features)
 
 ### Generating Marketing Images
 
