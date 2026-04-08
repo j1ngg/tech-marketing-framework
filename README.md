@@ -45,6 +45,7 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 │   │   ├── ads/                     # Paid ad copy generator
 │   │   ├── sales-deck/              # B2B sales narrative deck builder
 │   │   ├── blog/                    # SEO/AEO optimized blog post generator
+│   │   ├── editorial-calendar/      # Monthly rolling editorial calendar (MKT1)
 │   │   ├── image/                   # Marketing image generator (MCP)
 │   │   ├── launch-roundup/          # Weekly feature announcement pipeline
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
@@ -251,6 +252,40 @@ LinkedIn Pulse articles are the second most-cited domain in AI-generated respons
 - Code snippets always include comments
 - Follows 2026 SEO/AEO best practices (archetypal phrasing, answer-first structure)
 - Hands off to `/social-posts` skill for short-form promotion
+
+### Building an Editorial Calendar
+
+Use the `/editorial-calendar` skill to build a monthly rolling content plan:
+
+```
+/editorial-calendar
+```
+
+The skill runs an interactive workshop based on Emily Kramer's MKT1 methodology, walking through five discovery sections:
+
+| Section | What it covers |
+|---------|----------------|
+| 1. Business Context | Goals, revenue levers, GTM motion |
+| 2. Perceptions | What you want your audience to say about you (3 to 5 statements) |
+| 3. Content Pillars & Audience | Topic areas, audience segments, channels, formats |
+| 4. Capacity | Team size, cadence, what's working, repurposable backlog |
+| 5. Product & Market Context | Upcoming launches, events, competitive moves |
+
+**Output:** Three artifacts designed for monthly use:
+
+| Artifact | What it contains |
+|----------|-----------------|
+| 3-Month Theme Roadmap | Monthly themes mapped to revenue levers and Perceptions |
+| 4-Week Editorial Calendar | Specific pieces with title, type, pillar, channel, owner, distribution |
+| Repurposing Matrix | Derivative content from each anchor piece |
+
+**Key features:**
+- Every piece maps to a Perception and revenue lever (no random acts of marketing)
+- 70/30 split enforced (educational/problem content vs. product content)
+- 15 to 20% capacity reserved for reactive content
+- Pre-post opportunities identified for anchor content
+- Hands off to `/blog`, `/social-posts`, `/email`, or `/launch-roundup` for execution
+- Re-run monthly with "refresh" to roll the plan forward without re-answering all questions
 
 ### Weekly Launch Roundup
 
