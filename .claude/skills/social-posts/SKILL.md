@@ -63,7 +63,8 @@ LinkedIn reaches VPs, Heads of Engineering, CTOs. Budget holders, not builders. 
 - Lead with the problem or market insight, not the product
 - Focus on business impact and governance implications
 - Use concrete numbers (time saved, cost reduced, risk mitigated)
-- Structure: Problem → Impact → Solution exists → Link
+- Structure: Problem → Impact → Solution exists → CTA
+- **Never put a direct link in the post body.** End with "Full story in comments." or "Link in comments." and instruct the user to drop the URL as the first comment after publishing.
 - Length: 150 to 250 words
 - No hashtags in body (optional 2 to 3 at end if company standard)
 - No emojis
@@ -75,7 +76,8 @@ LinkedIn reaches VPs, Heads of Engineering, CTOs. Budget holders, not builders. 
 - Surface personal voice throughout
 - Disclose affiliations explicitly when discussing your own product ("Full disclosure: I helped build X")
 - First person throughout
-- Structure: Personal hook → Story → Insight → Disclosure (if applicable) → Link
+- Structure: Personal hook → Story → Insight → Disclosure (if applicable) → CTA
+- **Never put a direct link in the post body.** End with "Full story in comments." or "Link in comments." and instruct the user to drop the URL as the first comment after publishing.
 - Length: 200 to 350 words
 - No hashtags
 - No emojis
@@ -196,7 +198,17 @@ Before delivering, verify:
 - [ ] Personal posts use first person
 - [ ] Affiliations disclosed (if applicable)
 - [ ] Concrete numbers in hooks where available
-- [ ] Exactly one link placement per post/thread
+- [ ] Exactly one link placement per post/thread (Twitter: in final post; LinkedIn: "Link in comments" CTA, never a direct URL in the post body)
+
+---
+
+## LinkedIn Carousel Prompt
+
+After generating any LinkedIn post (brand or personal), ask the user:
+
+> "Want me to generate a LinkedIn carousel to go with this post?"
+
+If yes, invoke the `/image` skill targeting LinkedIn carousel format. If `docs/inputs-local/carousel_style_ceros.md` exists, use it as the style reference. Otherwise fall back to `docs/inputs/brand_guidelines.md`.
 
 ---
 
