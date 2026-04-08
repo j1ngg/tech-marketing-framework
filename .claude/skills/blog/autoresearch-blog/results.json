@@ -1,0 +1,32 @@
+{
+  "skill_name": "blog",
+  "status": "complete",
+  "current_experiment": 1,
+  "baseline_score": 96.0,
+  "best_score": 100.0,
+  "experiments": [
+    {
+      "id": 0,
+      "score": 24,
+      "max_score": 25,
+      "pass_rate": 96.0,
+      "status": "baseline",
+      "description": "original skill — no changes. Feature announcement use cases section is filler."
+    },
+    {
+      "id": 1,
+      "score": 25,
+      "max_score": 25,
+      "pass_rate": 100.0,
+      "status": "keep",
+      "description": "added anti-repetition instruction to feature announcement use cases section"
+    }
+  ],
+  "eval_breakdown": [
+    {"name": "Reference value", "pass_count": 10, "total": 10},
+    {"name": "I didn't know that", "pass_count": 10, "total": 10},
+    {"name": "Naming the pain", "pass_count": 10, "total": 10},
+    {"name": "No filler", "pass_count": 9, "total": 10},
+    {"name": "Formatting discipline", "pass_count": 10, "total": 10}
+  ]
+}

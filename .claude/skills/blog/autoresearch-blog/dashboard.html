@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoresearch: Blog Skill</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fafafa; color: #333; padding: 24px; max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+  .status-bar { display: flex; gap: 24px; margin-bottom: 24px; }
+  .stat { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 16px 20px; flex: 1; }
+  .stat-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .stat-value.running { color: #4A90D9; }
+  .stat-value.complete { color: #5CB85C; }
+  .chart-container { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
+  .chart-container h2 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+  .experiments-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  .experiments-table th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; text-align: left; padding: 10px 14px; border-bottom: 1px solid #e8e8e8; }
+  .experiments-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .badge.baseline { background: #D6EAF8; color: #2E86C1; }
+  .badge.keep { background: #D5F5E3; color: #27AE60; }
+  .badge.discard { background: #FADBD8; color: #E74C3C; }
+  .eval-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .eval-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px; }
+  .eval-card .name { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .eval-card .bar-bg { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+  .eval-card .bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+  .eval-card .pct { font-size: 20px; font-weight: 700; margin-top: 6px; }
+  .refresh-note { text-align: center; color: #bbb; font-size: 12px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<h1>Autoresearch: Blog Skill</h1>
+<p class="subtitle">5 evals &times; 5 runs = max score 25</p>
+
+<div class="status-bar">
+  <div class="stat"><div class="stat-label">Status</div><div class="stat-value" id="status">Loading...</div></div>
+  <div class="stat"><div class="stat-label">Baseline</div><div class="stat-value" id="baseline">—</div></div>
+  <div class="stat"><div class="stat-label">Best Score</div><div class="stat-value" id="best">—</div></div>
+  <div class="stat"><div class="stat-label">Experiments</div><div class="stat-value" id="expcount">0</div></div>
+</div>
+
+<div class="chart-container">
+  <h2>Score Progression</h2>
+  <canvas id="chart" height="80"></canvas>
+</div>
+
+<h2 style="font-size:15px;font-weight:600;margin-bottom:10px;">Eval Breakdown</h2>
+<div class="eval-grid" id="evals"></div>
+
+<h2 style="font-size:15px;font-weight:600;margin-bottom:10px;">Experiments</h2>
+<table class="experiments-table">
+  <thead><tr><th>#</th><th>Score</th><th>Pass Rate</th><th>Status</th><th>Description</th></tr></thead>
+  <tbody id="expbody"></tbody>
+</table>
+
+<p class="refresh-note">Auto-refreshes every 10 seconds</p>
+
+<script>
+let chart = null;
+async function load() {
+  try {
+    const r = await fetch('results.json?t=' + Date.now());
+    const d = await r.json();
+    const el = id => document.getElementById(id);
+    const statusEl = el('status');
+    statusEl.textContent = d.status === 'running' ? 'Running experiment ' + d.current_experiment + '...' : 'Complete';
+    statusEl.className = 'stat-value ' + d.status;
+    el('baseline').textContent = d.baseline_score.toFixed(0) + '%';
+    el('best').textContent = d.best_score.toFixed(0) + '%';
+    el('expcount').textContent = d.experiments.length;
+
+    // Chart
+    const ctx = el('chart').getContext('2d');
+    const labels = d.experiments.map(e => '#' + e.id);
+    const data = d.experiments.map(e => e.pass_rate);
+    const colors = d.experiments.map(e => e.status === 'baseline' ? '#4A90D9' : e.status === 'keep' ? '#5CB85C' : '#E74C3C');
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Pass Rate %',
+          data,
+          borderColor: '#4A90D9',
+          backgroundColor: 'rgba(74,144,217,0.1)',
+          fill: true,
+          tension: 0.3,
+          pointBackgroundColor: colors,
+          pointRadius: 6,
+          pointBorderWidth: 2,
+          pointBorderColor: '#fff'
+        }]
+      },
+      options: {
+        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Evals
+    const eg = el('evals');
+    eg.innerHTML = '';
+    d.eval_breakdown.forEach(ev => {
+      const pct = ev.total ? Math.round(ev.pass_count / ev.total * 100) : 0;
+      const color = pct >= 80 ? '#5CB85C' : pct >= 50 ? '#F0AD4E' : '#E74C3C';
+      eg.innerHTML += '<div class="eval-card"><div class="name">' + ev.name + '</div><div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div><div class="pct" style="color:' + color + '">' + pct + '%</div><div style="font-size:11px;color:#aaa">' + ev.pass_count + '/' + ev.total + ' passed</div></div>';
+    });
+
+    // Table
+    const tb = el('expbody');
+    tb.innerHTML = '';
+    d.experiments.forEach(e => {
+      tb.innerHTML += '<tr><td>' + e.id + '</td><td>' + e.score + '/' + e.max_score + '</td><td>' + e.pass_rate.toFixed(1) + '%</td><td><span class="badge ' + e.status + '">' + e.status + '</span></td><td>' + e.description + '</td></tr>';
+    });
+  } catch(e) { console.log('Refresh error', e); }
+}
+load();
+setInterval(load, 10000);
+</script>
+</body>
+</html>

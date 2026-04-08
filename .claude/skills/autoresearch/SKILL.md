@@ -233,6 +233,25 @@ When the user returns or the loop stops, present:
 
 ---
 
+## step 8: promote or discard
+
+After presenting results, ask the user:
+
+> "The optimized version scored [X]% vs the original [Y]%. Want me to replace the original SKILL.md with the optimized version?"
+
+**If yes:**
+1. Copy `[user-chosen-name].md` over the original `SKILL.md`
+2. Keep `SKILL.md.baseline` in the working directory as a rollback point
+3. Confirm: "Original SKILL.md replaced. Baseline saved at `autoresearch-[skill-name]/SKILL.md.baseline` if you need to revert."
+
+**If no:**
+1. Leave everything as-is
+2. Tell the user where the optimized version lives for future reference
+
+**Do not skip this step.** Orphaned optimized versions that never get promoted defeat the purpose of running autoresearch.
+
+---
+
 ## output format
 
 The skill produces four files in `autoresearch-[skill-name]/`:
@@ -246,7 +265,7 @@ autoresearch-[skill-name]/
 └── SKILL.md.baseline    # original skill before optimization
 ```
 
-**The original SKILL.md is NEVER modified.** The improved version lives in `[user-chosen-name].md`. The user can review, diff, and manually apply changes if they choose. Do NOT offer to overwrite the original. Do NOT copy the working file over the original. The whole point is that the original stays safe.
+**The original SKILL.md is NEVER modified during the experiment loop.** The improved version lives in `[user-chosen-name].md`. The user can review, diff, and manually apply changes if they choose.
 
 **results.tsv example:**
 
@@ -310,7 +329,7 @@ Result: Hit 39/40. One remaining failure: a complex diagram with overlapping lab
 - User-defined eval criteria (or help them define evals using the eval guide)
 
 **What autoresearch feeds into:**
-- The improved skill replaces the original
+- The improved skill replaces the original (after user approval in step 8)
 - The changelog can be passed to future models for continued optimization
 - The eval suite can be reused whenever the skill is updated
 

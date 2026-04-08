@@ -146,13 +146,11 @@ Generate the complete blog post following the type-specific structure below.
 
 ## Use Cases
 
-Each use case must highlight a DIFFERENT capability or behavior of the feature. If two use cases make the same point (e.g., "ephemeral credentials" applied to two different contexts), merge them into one or replace the duplicate with a use case that shows a distinct aspect of the feature.
-
 ### [Use Case 1]
-[Specific scenario where this feature helps. Emphasize the distinct capability exercised here.]
+[Specific scenario where this feature helps]
 
 ### [Use Case 2]
-[A different scenario that exercises a different aspect of the feature than Use Case 1.]
+[Another scenario]
 
 [VISUAL: Architecture diagram or workflow showing the feature in context]
 
