@@ -438,6 +438,17 @@ Supported platforms: Google Ads, Meta (Facebook/Instagram), LinkedIn
 
 See `claude.md` for the full philosophy and `.claude/rules/content-guidelines.md` for writing standards.
 
+## Landing Page
+
+The landing page at [j1ngg.github.io/tech-marketing-framework](https://j1ngg.github.io/tech-marketing-framework) is built with Astro and deployed automatically via GitHub Pages on push to main.
+
+```bash
+cd site
+npm install
+npm run dev     # Local dev server
+npm run build   # Production build
+```
+
 ## License
 
 MIT

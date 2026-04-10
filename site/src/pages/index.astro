@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const skills = [
+  { cmd: '/social-posts', desc: 'LinkedIn and Twitter posts from your product docs', color: 'bg-blue-500' },
+  { cmd: '/email', desc: 'Event follow-up sequences with programmatic personalization', color: 'bg-teal-500' },
+  { cmd: '/blog', desc: 'SEO and AEO optimized posts with tri-publish variants', color: 'bg-orange-500' },
+  { cmd: '/ads', desc: 'Google, Meta, and LinkedIn ad copy via creative matrix', color: 'bg-green-500' },
+  { cmd: '/sales-deck', desc: 'B2B narrative decks using April Dunford methodology', color: 'bg-purple-500' },
+  { cmd: '/image', desc: 'Marketing images via MCP with brand guideline enforcement', color: 'bg-pink-500' },
+  { cmd: '/messaging-positioning', desc: 'Socratic workshop that builds your positioning doc', color: 'bg-amber-500' },
+  { cmd: '/editorial-calendar', desc: 'Monthly rolling content plan using MKT1 methodology', color: 'bg-red-400' },
+  { cmd: '/launch-roundup', desc: 'MRs to Slack + blog + LinkedIn + carousel in one run', color: 'bg-indigo-500' },
+  { cmd: '/skill-builder', desc: 'Design and create new skills or agents interactively', color: 'bg-stone-500' },
+  { cmd: '/autoresearch', desc: 'Autonomous eval loops that optimize your skill prompts', color: 'bg-yellow-600' },
+];
+
+const agents = [
+  {
+    name: 'asset-reviewer',
+    title: 'Asset Reviewer',
+    desc: 'Ruthless QA agent. Reviews any marketing asset against your content guidelines, product brief, and positioning. Flags banned words, structural anti-patterns, and missing evidence.',
+    color: 'border-red-400',
+  },
+  {
+    name: 'how-they-market',
+    title: 'Competitive Research',
+    desc: 'Runs parallel web searches across HN, Reddit, LinkedIn, and Twitter to surface exactly how a company, person, or newsletter does marketing. Outputs a strategic flywheel, channels, tactics, and what to steal.',
+    color: 'border-blue-400',
+  },
+  {
+    name: 'ads-auditor',
+    title: 'Ads Auditor',
+    desc: 'Analyzes campaign metrics against benchmarks. Produces a health score (0 to 100), critical issue flags, optimization recommendations, and platform-specific checklists.',
+    color: 'border-amber-400',
+  },
+];
+
+const steps = [
+  { num: '1', title: 'Clone and fill in your docs', desc: 'Add your product brief, personas, competitive intel, messaging, and testimonials to docs/inputs/.', code: '$ git clone github.com/j1ngg/tech-marketing-framework\n$ cd tech-marketing-framework' },
+  { num: '2', title: 'Run Claude Code', desc: 'Claude automatically loads the marketing persona, content guidelines, and all 11 skills.', code: '$ claude' },
+  { num: '3', title: 'Use any skill', desc: 'Every skill reads your product docs before generating. Output is grounded in your actual product.', code: '> /blog\n> /social-posts\n> /ads' },
+];
+---
+
+<Layout
+  title="Tech Marketing Framework"
+  description="11 skills that turn Claude Code into a marketing workbench for developer tools. Open source. Ready in 30 seconds."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-sage-100 via-stone-50 to-sage-50"></div>
+    <div class="relative max-w-5xl mx-auto px-6 pt-20 pb-24">
+      <div class="inline-block px-3 py-1 rounded-full bg-sage-300 text-sage-800 text-sm font-semibold mb-6">
+        Open Source · MIT Licensed
+      </div>
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+        Your terminal is now a<br/>
+        <span class="text-sage-600">marketing workbench.</span>
+      </h1>
+      <p class="text-xl text-stone-600 max-w-2xl mb-10">
+        11 Claude Code skills that read your product docs and generate content for technical audiences. No SaaS. No dashboard. Just a git repo that makes Claude Code write like your engineering team talks.
+      </p>
+      <div class="bg-terminal rounded-xl p-6 max-w-xl shadow-2xl mb-8">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <pre class="font-mono text-sm md:text-base"><code><span class="text-stone-500">$</span> <span class="text-green-400">git clone</span> github.com/j1ngg/tech-marketing-framework
+<span class="text-stone-500">$</span> <span class="text-green-400">cd</span> tech-marketing-framework
+<span class="text-stone-500">$</span> <span class="text-green-400">claude</span>
+<span class="text-stone-500 text-xs">Ready in 30 seconds</span></code></pre>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a
+          href="https://github.com/j1ngg/tech-marketing-framework"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-stone-900 text-white rounded-lg font-semibold hover:bg-stone-800 transition-colors"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a
+          href="#skills"
+          class="inline-flex items-center px-6 py-3 border-2 border-stone-300 text-stone-700 rounded-lg font-semibold hover:border-stone-400 transition-colors"
+        >
+          See all skills ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What it is -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Config-as-code marketing</h2>
+        <p class="text-stone-600 mb-4">
+          This is not an app. It is a git repo. Clone it, fill in six markdown files about your product, and Claude Code becomes a senior product marketer who knows your product, your competitors, and your audience.
+        </p>
+        <p class="text-stone-600">
+          Every skill reads from <code class="bg-stone-200 px-1.5 py-0.5 rounded text-sm font-mono">docs/inputs/</code> before generating anything. The output is grounded in your actual product, not generic AI copy full of "seamless" and "cutting-edge."
+        </p>
+      </div>
+      <div class="bg-terminal rounded-xl p-5 shadow-lg">
+        <pre class="font-mono text-sm text-stone-300 leading-relaxed"><code><span class="text-green-400">docs/inputs/</span>
+├── product_brief.md
+├── target_personas.md
+├── messaging_positioning.md
+├── competitor_intel.md
+├── testimonials.md
+└── brand_guidelines.md
+
+<span class="text-yellow-400">docs/inputs-local/</span>  <span class="text-stone-500">(gitignored, private override)</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="bg-white py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-2">11 skills</h2>
+      <p class="text-stone-500 mb-10">Each one is a slash command. Each one reads your product docs first.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {skills.map((skill) => (
+          <div class="border border-stone-200 rounded-xl p-5 hover:border-sage-300 hover:shadow-sm transition-all">
+            <div class="flex items-center gap-3 mb-2">
+              <div class={`w-2.5 h-2.5 rounded-full ${skill.color}`}></div>
+              <code class="font-mono font-semibold text-sm">{skill.cmd}</code>
+            </div>
+            <p class="text-stone-500 text-sm">{skill.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold mb-10">How it works</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      {steps.map((step) => (
+        <div>
+          <div class="w-10 h-10 rounded-full bg-sage-300 text-sage-800 font-bold flex items-center justify-center mb-4">
+            {step.num}
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{step.title}</h3>
+          <p class="text-stone-500 text-sm mb-4">{step.desc}</p>
+          <div class="bg-terminal rounded-lg p-4">
+            <pre class="font-mono text-xs text-green-400 whitespace-pre-wrap">{step.code}</pre>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Agents -->
+  <section class="bg-white py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-2">3 autonomous agents</h2>
+      <p class="text-stone-500 mb-10">Fire and forget. No interaction required.</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        {agents.map((agent) => (
+          <div class={`border-l-4 ${agent.color} bg-stone-50 rounded-r-xl p-6`}>
+            <code class="font-mono text-xs text-stone-400">{agent.name}</code>
+            <h3 class="font-semibold text-lg mt-1 mb-3">{agent.title}</h3>
+            <p class="text-stone-500 text-sm">{agent.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Before/After -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold mb-10 text-center">Generic AI copy vs. grounded marketing</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-3 py-1 bg-red-400 text-white text-xs font-bold rounded-full">ChatGPT / Generic AI</span>
+        </div>
+        <p class="text-stone-600 text-sm italic">
+          "Unlock the power of seamless integration with our cutting-edge platform. Leverage robust AI capabilities to transform your workflow and delve into unprecedented productivity gains."
+        </p>
+      </div>
+      <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full">Tech Marketing Framework</span>
+        </div>
+        <p class="text-stone-600 text-sm">
+          "Ship a LinkedIn post about your new vector search feature in 30 seconds. /social-posts reads your product_brief.md, knows your competitors from competitor_intel.md, and writes like your engineering team talks. Not like a SaaS marketing team."
+        </p>
+      </div>
+    </div>
+    <p class="text-center text-stone-400 text-sm mt-6">Same prompt. Different context. The difference is your product docs.</p>
+  </section>
+
+  <!-- Autoresearch -->
+  <section class="bg-sage-100 py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-bold mb-2">Skills that improve themselves</h2>
+        <p class="text-stone-600 mb-8">
+          /autoresearch runs your skill against binary evals, scores outputs, mutates the prompt one change at a time, and keeps improvements. Based on Andrej Karpathy's autoresearch methodology.
+        </p>
+      </div>
+      <div class="bg-terminal rounded-xl p-6 shadow-lg max-w-2xl">
+        <pre class="font-mono text-sm leading-relaxed"><code><span class="text-green-400">&gt; Running autoresearch on /email skill...</span>
+
+<span class="text-stone-300">&gt; Baseline: 23/30 passed (76.7%)</span>
+
+<span class="text-stone-300">&gt; Mutation 1: Added specific event detail requirements</span>
+<span class="text-green-400">&gt; Result: 30/30 passed (100.0%)</span>
+<span class="text-yellow-400">&gt; Improvement: +23.3%</span>
+
+<span class="text-green-400">&gt; New best score achieved. Saving optimized skill.</span></code></pre>
+      </div>
+      <p class="text-stone-500 text-sm mt-4">Real results from the /email skill optimization run.</p>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="bg-terminal py-24">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="inline-block px-3 py-1 rounded-full bg-sage-300 text-sage-800 text-sm font-bold mb-8">
+        MIT Licensed
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
+        Open source.
+      </h2>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
+        Obsessively optimized daily
+      </h2>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+        by a startup marketing VP.
+      </h2>
+      <p class="text-3xl md:text-4xl font-extrabold text-green-400 mb-12">
+        Ready in 30 seconds.
+      </p>
+      <div class="bg-stone-800/50 rounded-xl p-6 max-w-md mx-auto mb-10">
+        <pre class="font-mono text-sm text-green-400 text-left"><code>$ git clone github.com/j1ngg/tech-marketing-framework
+$ cd tech-marketing-framework
+$ claude</code></pre>
+      </div>
+      <a
+        href="https://github.com/j1ngg/tech-marketing-framework"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-white text-stone-900 rounded-lg font-bold text-lg hover:bg-stone-100 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        Get started on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-stone-900 text-stone-400 py-8">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+      <p>Tech Marketing Framework · MIT License</p>
+      <div class="flex gap-6">
+        <a href="https://github.com/j1ngg/tech-marketing-framework" class="hover:text-white transition-colors">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</Layout>

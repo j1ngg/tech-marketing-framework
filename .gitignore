@@ -2,3 +2,6 @@
 output/
 docs/inputs-local/
 docs/research/
+site/node_modules/
+site/dist/
+site/.astro/
