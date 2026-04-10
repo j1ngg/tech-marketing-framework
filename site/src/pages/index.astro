@@ -20,27 +20,30 @@ const agents = [
     name: 'asset-reviewer',
     title: 'Asset Reviewer',
     desc: 'Ruthless QA agent. Reviews any marketing asset against your content guidelines, product brief, and positioning. Flags banned words, structural anti-patterns, and missing evidence.',
-    color: 'border-red-400',
+    accent: 'bg-red-400',
   },
   {
     name: 'how-they-market',
     title: 'Competitive Research',
     desc: 'Runs parallel web searches across HN, Reddit, LinkedIn, and Twitter to surface exactly how a company, person, or newsletter does marketing. Outputs a strategic flywheel, channels, tactics, and what to steal.',
-    color: 'border-blue-400',
+    accent: 'bg-blue-400',
   },
   {
     name: 'ads-auditor',
     title: 'Ads Auditor',
     desc: 'Analyzes campaign metrics against benchmarks. Produces a health score (0 to 100), critical issue flags, optimization recommendations, and platform-specific checklists.',
-    color: 'border-amber-400',
+    accent: 'bg-amber-400',
   },
 ];
 
 const steps = [
   { num: '1', title: 'Clone and fill in your docs', desc: 'Add your product brief, personas, competitive intel, messaging, and testimonials to docs/inputs/.', code: '$ git clone github.com/j1ngg/tech-marketing-framework\n$ cd tech-marketing-framework' },
-  { num: '2', title: 'Run Claude Code', desc: 'Claude automatically loads the marketing persona, content guidelines, and all 11 skills.', code: '$ claude' },
-  { num: '3', title: 'Use any skill', desc: 'Every skill reads your product docs before generating. Output is grounded in your actual product.', code: '> /blog\n> /social-posts\n> /ads' },
+  { num: '2', title: 'Run Claude Code', desc: 'Claude loads the marketing persona, content guidelines, and all skills automatically.', code: '$ claude' },
+  { num: '3', title: 'Use any skill', desc: 'Every skill reads your product docs before generating. Output references your real product, not hallucinated features.', code: '> /blog\n> /social-posts\n> /ads' },
 ];
+
+const githubCta = { href: 'https://github.com/j1ngg/tech-marketing-framework', label: 'Get started on GitHub' };
+const githubSvg = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>';
 ---
 
 <Layout
@@ -54,7 +57,7 @@ const steps = [
       <div class="inline-block px-3 py-1 rounded-full bg-sage-300 text-sage-800 text-sm font-semibold mb-6">
         Open Source · MIT Licensed
       </div>
-      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 font-display">
         Your terminal is now a<br/>
         <span class="text-sage-600">marketing workbench.</span>
       </h1>
@@ -77,8 +80,8 @@ const steps = [
           href="https://github.com/j1ngg/tech-marketing-framework"
           class="inline-flex items-center gap-2 px-6 py-3 bg-stone-900 text-white rounded-lg font-semibold hover:bg-stone-800 transition-colors"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          View on GitHub
+          <Fragment set:html={githubSvg} />
+          Get started on GitHub
         </a>
         <a
           href="#skills"
@@ -94,12 +97,15 @@ const steps = [
   <section class="max-w-5xl mx-auto px-6 py-20">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div>
-        <h2 class="text-3xl font-bold mb-4">Config-as-code marketing</h2>
+        <h2 class="text-3xl font-bold mb-4 font-display">Config-as-code marketing</h2>
         <p class="text-stone-600 mb-4">
           This is not an app. It is a git repo. Clone it, fill in six markdown files about your product, and Claude Code becomes a senior product marketer who knows your product, your competitors, and your audience.
         </p>
-        <p class="text-stone-600">
+        <p class="text-stone-600 mb-4">
           Every skill reads from <code class="bg-stone-200 px-1.5 py-0.5 rounded text-sm font-mono">docs/inputs/</code> before generating anything. The output is grounded in your actual product, not generic AI copy full of "seamless" and "cutting-edge."
+        </p>
+        <p class="text-stone-900 font-semibold">
+          Product context in, accurate marketing out. No hallucinated features. No fabricated quotes. No placeholder links.
         </p>
       </div>
       <div class="bg-terminal rounded-xl p-5 shadow-lg">
@@ -119,7 +125,7 @@ const steps = [
   <!-- Skills -->
   <section id="skills" class="bg-white py-20">
     <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-2">11 skills</h2>
+      <h2 class="text-3xl font-bold mb-2 font-display">11 skills and growing</h2>
       <p class="text-stone-500 mb-10">Each one is a slash command. Each one reads your product docs first.</p>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {skills.map((skill) => (
@@ -132,39 +138,51 @@ const steps = [
           </div>
         ))}
       </div>
+      <div class="mt-8 text-center">
+        <a
+          href="https://github.com/j1ngg/tech-marketing-framework"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-stone-900 text-white rounded-lg font-semibold hover:bg-stone-800 transition-colors"
+        >
+          <Fragment set:html={githubSvg} />
+          Get started on GitHub
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- How it works -->
+  <!-- Agents -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <h2 class="text-3xl font-bold mb-10">How it works</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      {steps.map((step) => (
-        <div>
-          <div class="w-10 h-10 rounded-full bg-sage-300 text-sage-800 font-bold flex items-center justify-center mb-4">
-            {step.num}
+    <h2 class="text-3xl font-bold mb-2 font-display">3 agents and growing</h2>
+    <p class="text-stone-500 mb-10">Fire and forget. No interaction required.</p>
+    <div class="grid md:grid-cols-3 gap-6">
+      {agents.map((agent) => (
+        <div class="bg-stone-50 rounded-xl p-6 border border-stone-200">
+          <div class="flex items-center gap-2 mb-1">
+            <div class={`w-2.5 h-2.5 rounded-full ${agent.accent}`}></div>
+            <code class="font-mono text-xs text-stone-400">{agent.name}</code>
           </div>
-          <h3 class="font-semibold text-lg mb-2">{step.title}</h3>
-          <p class="text-stone-500 text-sm mb-4">{step.desc}</p>
-          <div class="bg-terminal rounded-lg p-4">
-            <pre class="font-mono text-xs text-green-400 whitespace-pre-wrap">{step.code}</pre>
-          </div>
+          <h3 class="font-display font-semibold text-lg mt-1 mb-3">{agent.title}</h3>
+          <p class="text-stone-500 text-sm">{agent.desc}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Agents -->
+  <!-- How it works -->
   <section class="bg-white py-20">
     <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-2">3 autonomous agents</h2>
-      <p class="text-stone-500 mb-10">Fire and forget. No interaction required.</p>
-      <div class="grid md:grid-cols-3 gap-6">
-        {agents.map((agent) => (
-          <div class={`border-l-4 ${agent.color} bg-stone-50 rounded-r-xl p-6`}>
-            <code class="font-mono text-xs text-stone-400">{agent.name}</code>
-            <h3 class="font-semibold text-lg mt-1 mb-3">{agent.title}</h3>
-            <p class="text-stone-500 text-sm">{agent.desc}</p>
+      <h2 class="text-3xl font-bold mb-10 font-display">How it works</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {steps.map((step) => (
+          <div>
+            <div class="w-10 h-10 rounded-full bg-sage-300 text-sage-800 font-bold flex items-center justify-center mb-4">
+              {step.num}
+            </div>
+            <h3 class="font-semibold text-lg mb-2">{step.title}</h3>
+            <p class="text-stone-500 text-sm mb-4">{step.desc}</p>
+            <div class="bg-terminal rounded-lg p-4">
+              <pre class="font-mono text-xs text-green-400 whitespace-pre-wrap">{step.code}</pre>
+            </div>
           </div>
         ))}
       </div>
@@ -173,7 +191,8 @@ const steps = [
 
   <!-- Before/After -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <h2 class="text-3xl font-bold mb-10 text-center">Generic AI copy vs. grounded marketing</h2>
+    <h2 class="text-3xl font-bold mb-3 text-center font-display">Built-in AI slop killer</h2>
+    <p class="text-stone-500 mb-10 text-center max-w-2xl mx-auto">The asset-reviewer agent enforces your content guidelines on every piece of output. Banned words, structural anti-patterns, and unsubstantiated claims get flagged before anything ships.</p>
     <div class="grid md:grid-cols-2 gap-6">
       <div class="bg-red-50 border border-red-200 rounded-xl p-6">
         <div class="flex items-center gap-2 mb-4">
@@ -199,9 +218,9 @@ const steps = [
   <section class="bg-sage-100 py-20">
     <div class="max-w-5xl mx-auto px-6">
       <div class="max-w-2xl">
-        <h2 class="text-3xl font-bold mb-2">Skills that improve themselves</h2>
+        <h2 class="text-3xl font-bold mb-2 font-display">Skills that improve themselves</h2>
         <p class="text-stone-600 mb-8">
-          /autoresearch runs your skill against binary evals, scores outputs, mutates the prompt one change at a time, and keeps improvements. Based on Andrej Karpathy's autoresearch methodology.
+          /autoresearch runs your skill against binary evals, scores outputs, mutates the prompt one change at a time, and keeps improvements. Based on <a href="https://github.com/karpathy/autoresearch" class="text-sage-700 underline hover:text-sage-900">Andrej Karpathy's autoresearch</a> methodology.
         </p>
       </div>
       <div class="bg-terminal rounded-xl p-6 shadow-lg max-w-2xl">
@@ -246,7 +265,7 @@ $ claude</code></pre>
         href="https://github.com/j1ngg/tech-marketing-framework"
         class="inline-flex items-center gap-2 px-8 py-4 bg-white text-stone-900 rounded-lg font-bold text-lg hover:bg-stone-100 transition-colors"
       >
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <Fragment set:html={githubSvg} />
         Get started on GitHub
       </a>
     </div>
