@@ -1,14 +1,17 @@
 # Tech Marketing Framework
 
-A Claude Code project for developer tools marketing. Repeatable skills for content generation, messaging workshops, and autonomous skill optimization.
+A shared Claude Code and Codex project for developer tools marketing. Repeatable skills for content generation, messaging workshops, and autonomous skill optimization.
 
 ## Installation
 
-**Prerequisites:** [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
+**Prerequisites:** [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex CLI](https://help.openai.com/en/articles/11096431-openai-codex-ci-getting-started)
 
 ```bash
 # Install Claude Code CLI
 npm install -g @anthropic-ai/claude-code
+
+# Or install OpenAI Codex CLI
+npm install -g @openai/codex
 
 # Clone this repo
 git clone https://github.com/j1ngg/tech-marketing-framework.git
@@ -16,13 +19,18 @@ cd tech-marketing-framework
 
 # Run Claude Code
 claude
+
+# Or run Codex
+codex
 ```
 
-Claude will automatically load the marketing assistant persona and all skills.
+Claude Code will automatically load `claude.md` and `.claude/`.
+
+Codex will automatically load `AGENTS.md` and `.agents/skills/`.
 
 ## What This Is
 
-This repo turns Claude Code into a senior product marketer for technical audiences. It provides:
+This repo turns Claude Code and Codex into a senior product marketer for technical audiences. It provides:
 
 - **Identity and voice guidelines** that prioritize technical accuracy over marketing fluff
 - **Content guidelines** with strict standards for writing, formatting, and AI discoverability
@@ -33,7 +41,10 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 ## Structure
 
 ```
-├── claude.md                        # Core identity and workflow instructions
+├── AGENTS.md                        # Codex repo instructions
+├── claude.md                        # Claude Code instructions
+├── .agents/
+│   └── skills/                      # Codex skill wrappers
 ├── .claude/
 │   ├── rules/
 │   │   └── content-guidelines.md    # Writing standards
@@ -77,9 +88,16 @@ This repo turns Claude Code into a senior product marketer for technical audienc
 
 1. Clone this repo into your project or use it as a standalone workspace
 2. Fill in the `/docs/inputs/` templates with your product details
-3. Run Claude Code in this directory
+3. Run Claude Code or Codex in this directory
 
-Claude will automatically adopt the marketing assistant persona and follow the content guidelines.
+Tool syntax:
+
+- In Claude Code, use slash commands such as `/social-posts`
+- In Codex, invoke the same workflow by skill name, for example `$social-posts`, or ask for it directly in plain English
+
+Both tools follow the same underlying workflow definitions.
+
+The examples below use Claude Code slash syntax. In Codex, use the same skill name with `$`, for example `$social-posts`, or describe the workflow in plain English.
 
 ### Running the Messaging Workshop
 
@@ -379,13 +397,15 @@ The skill runs autonomously until stopped or until it hits 95%+ pass rate for 3 
 
 ### Researching How Others Market
 
-Use the `how-they-market` agent to analyze how a person, company, or newsletter markets themselves:
+Use the `how-they-market` workflow to analyze how a person, company, or newsletter markets themselves:
 
 ```
 Analyze how [company/person/newsletter] markets
 ```
 
-The agent runs parallel web searches across HN, Reddit, LinkedIn, and Twitter, then visits the target's website to extract positioning.
+In Claude Code this is exposed as an agent. In Codex it is exposed as a skill wrapper over the same canonical instructions.
+
+The workflow runs parallel web searches across HN, Reddit, LinkedIn, and Twitter, then visits the target's website to extract positioning.
 
 | Section | What it covers |
 |---------|----------------|
@@ -403,13 +423,15 @@ Optional: Specify a focus area like "just their Twitter," "how they launch produ
 
 ### Auditing Ad Performance
 
-Use the `ads-auditor` agent to analyze campaign performance and get optimization recommendations:
+Use the `ads-auditor` workflow to analyze campaign performance and get optimization recommendations:
 
 ```
 Audit my Google Ads performance: [paste metrics or provide file path]
 ```
 
-The agent analyzes your data against benchmarks and produces:
+In Claude Code this is exposed as an agent. In Codex it is exposed as a skill wrapper over the same canonical instructions.
+
+The workflow analyzes your data against benchmarks and produces:
 
 | Section | What it covers |
 |---------|----------------|
@@ -436,7 +458,7 @@ Supported platforms: Google Ads, Meta (Facebook/Instagram), LinkedIn
 - Personality is a moat
 - Replace adjectives with evidence
 
-See `claude.md` for the full philosophy and `.claude/rules/content-guidelines.md` for writing standards.
+See `claude.md` for the Claude Code entrypoint, `AGENTS.md` for the Codex entrypoint, and `.claude/rules/content-guidelines.md` for the shared writing standards.
 
 ## Landing Page
 
