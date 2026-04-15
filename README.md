@@ -55,6 +55,7 @@ This repo turns Claude Code and Codex into a senior product marketer for technic
 │   │   ├── email/                   # Event follow-up email sequences
 │   │   ├── ads/                     # Paid ad copy generator
 │   │   ├── sales-deck/              # B2B sales narrative deck builder
+│   │   ├── one-pager/               # Product one-pager for sales enablement
 │   │   ├── blog/                    # SEO/AEO optimized blog post generator
 │   │   ├── editorial-calendar/      # Monthly rolling editorial calendar (MKT1)
 │   │   ├── image/                   # Marketing image generator (MCP)
@@ -215,6 +216,45 @@ This structure combats "no decision" paralysis by giving buyers a clear evaluati
 **Output:**
 - Markdown outline: `output/decks/[product-name]-sales-deck.md`
 - PPTX file: `output/decks/[product-name]-sales-deck.pptx`
+
+### Generating Product One-Pagers
+
+Use the `/one-pager` skill to generate product one-pagers for sales enablement:
+
+```
+/one-pager
+```
+
+The skill generates a scannable, single-page document that works across sales contexts:
+
+| Use Case | What changes |
+|----------|-------------|
+| **Leave-behind** | Post-meeting recap that keeps momentum |
+| **Champion enablement** | Arms your internal champion to sell for you |
+| **Event handout** | Quick intro that drives follow-up conversations |
+| **Top-of-funnel download** | Introduces the product to people who haven't talked to sales |
+
+**Layout structure:**
+
+| Section | Content |
+|---------|---------|
+| Hero banner | Product name, tagline, subtitle, CTA |
+| Problem + Solution (left) | Pain statement, solution mechanism, key differentiators |
+| Key Outcomes (right) | Four outcome blocks with bold headlines |
+| Architecture | Simplified diagram of how the product works |
+| Customer proof (optional) | Logo strip and strongest matching quote from testimonials |
+| Footer | URL, pricing hook, compliance badges, contact |
+
+**Key features:**
+- Reads all `docs/inputs/` files automatically for product context
+- Customer proof included by default, skippable per generation
+- Enforces the competitor test: every sentence must be specific enough that a competitor could not paste it unchanged
+- Supports persona-specific, event-specific, deal-specific, and use-case-specific variations without changing layout
+- Two-phase output: markdown draft for review, then styled HTML/CSS for PDF export
+
+**Output:**
+- Markdown draft: `output/one-pagers/[product-name]-one-pager.md`
+- HTML/PDF: `output/one-pagers/[product-name]-one-pager.html`
 
 ### Writing Blog Posts
 
