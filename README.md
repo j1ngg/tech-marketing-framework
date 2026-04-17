@@ -55,6 +55,7 @@ This repo turns Claude Code and Codex into a senior product marketer for technic
 │   │   ├── email/                   # Event follow-up email sequences
 │   │   ├── ads/                     # Paid ad copy generator
 │   │   ├── sales-deck/              # B2B sales narrative deck builder
+│   │   ├── conference-deck/         # Solo-presenter conference deck from abstract + case studies
 │   │   ├── blog/                    # SEO/AEO optimized blog post generator
 │   │   ├── editorial-calendar/      # Monthly rolling editorial calendar (MKT1)
 │   │   ├── image/                   # Marketing image generator (MCP)
@@ -215,6 +216,48 @@ This structure combats "no decision" paralysis by giving buyers a clear evaluati
 **Output:**
 - Markdown outline: `output/decks/[product-name]-sales-deck.md`
 - PPTX file: `output/decks/[product-name]-sales-deck.pptx`
+
+### Building Conference Decks
+
+Use the `/conference-deck` skill to turn an accepted conference abstract and one to three customer case studies into a solo-presenter deck:
+
+```
+/conference-deck
+```
+
+The skill is for external conference talks (Identiverse, Black Hat, RSA, industry summits), not internal sales pitches. For sales narratives use `/sales-deck` instead.
+
+**Narrative arc (default, 20 minutes):**
+
+| Section | Slides | Time | Purpose |
+|-------|--------|------|---------|
+| Setup | 2 to 3 | ~3 min | Title + premise + questions the talk will answer |
+| Case study 1 | 3 to 4 | ~5 min | Problem → deployment → outcomes → pull quote |
+| Case study 2 (optional) | 3 to 4 | ~5 min | Same four-beat shape, different angle |
+| Case study 3 (optional) | 3 | ~4 min | Compressed version |
+| Synthesis | 2 to 3 | ~4 min | Cross-case pattern + the big idea |
+| Take home | 1 to 2 | ~2 min | 3 to 5 bullets mapped back to abstract takeaways |
+
+**Case study sub-structure (four beats, every time):**
+
+1. Problem — what they faced, in context
+2. Deployment — four bullets max
+3. Outcomes — KPI grid or table with verbatim numbers
+4. Pull quote — named human, full attribution
+
+**Key features:**
+- Pulls from URLs, local Markdown, or pasted content for case study source material
+- Enforces "every metric and quote is verbatim" rule
+- Maps each case study to a specific question the abstract promised to answer
+- Synthesis slide stitches patterns across cases (not a summary)
+- Speaker notes attached to every slide in the PPTX
+- Optional 30-second opener and 60-second close scripts in full prose
+- Includes an `example_generator.py` reference script with KPI grid, pull quote, pattern table, and numbered take-home layouts
+
+**Output:**
+- Markdown outline: `output/decks/[slug]-[event].md`
+- PPTX file: `output/decks/[slug]-[event].pptx`
+- Build script: `scripts/build_[slug]_deck.py`
 
 ### Writing Blog Posts
 
