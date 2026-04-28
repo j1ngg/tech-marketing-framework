@@ -59,6 +59,7 @@ This repo turns Claude Code and Codex into a senior product marketer for technic
 │   │   ├── editorial-calendar/      # Monthly rolling editorial calendar (MKT1)
 │   │   ├── image/                   # Marketing image generator (MCP)
 │   │   ├── launch-roundup/          # Weekly feature announcement pipeline
+│   │   ├── producthunt-launch/      # Product Hunt listing assets + dated launch plan
 │   │   └── autoresearch/            # Skill optimization via autonomous evals
 │   └── agents/
 │       ├── asset-reviewer.md        # Reviews assets against guidelines
@@ -331,6 +332,32 @@ After you provide the MR source and approve the Slack copy, steps 3 through 5 ru
 - LinkedIn posts follow full `/social-posts` skill rules (brand + personal)
 - Carousel generates a PPTX via `python-pptx`, styled from brand guidelines
 - Adapts structure based on feature count (1 feature vs 5+ features)
+
+### Planning a Product Hunt Launch
+
+Use the `/producthunt-launch` skill to produce a complete Product Hunt launch package for a developer tool:
+
+```
+/producthunt-launch
+```
+
+The skill folds listing copy and launch planning into one workflow. It asks scope (listing only, plan only, or full package), gathers launch parameters, then generates:
+
+| Output | Contents |
+|--------|----------|
+| Listing assets | 3 tagline options (under 60 chars, stranger tested), description, maker's first comment (under 800 chars), gallery + video spec, social proof hooks |
+| Launch plan | Dated 6 week timeline (Foundation → Outreach → Final Prep → Final 5 Days), launch day runsheet (12:01 AM to 11:59 PM PT), team roles, post launch 30 day plan, asset inventory, success metrics |
+
+Key rules baked in:
+
+- Tagline rules: feature first, "[Product] for [category]" or "open source [known brand] alternative" formulas, no buzzwords
+- Maker comment is weighted heavily by PH algorithm (one quality comment ~ 40 to 50 upvotes)
+- Aged PH accounts (6+ months) carry roughly 10x vote weight
+- Top 500 hunters drive ~3.2x more upvotes (require 6 weeks outreach lead time)
+- Tuesdays and Wednesdays in week 2 or 3 of the month maximize the monthly badge
+- Testimonials are mandatory — gap flagged if missing
+
+Outputs land in `output/launches/{product-name}-{YYYY-MM-DD}/` as `listing.md` and/or `launch-plan.md`. Hands off to `/social-posts` for launch day posts and `asset-reviewer` for listing QA.
 
 ### Generating Marketing Images
 
