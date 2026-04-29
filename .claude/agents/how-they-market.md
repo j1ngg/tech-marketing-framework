@@ -71,6 +71,15 @@ After round 1, identify the **5 most promising sources** and fetch them simultan
 - If a URL fails on first attempt, note it in Gaps and move on — don't retry
 - Exception: if it's the single most critical source and no substitute exists, try one alternative (ThreadReaderApp for tweets, archive.org for articles)
 
+**X.com (Twitter) special case — do not retry direct fetches:**
+- `x.com` and `twitter.com` return 402 to unauthenticated requests. WebFetch on these domains will always fail. Do not retry.
+- Instead, in this order:
+  1. **Google search snippets** — `WebSearch` with queries like `"@handle" "phrase from tweet"` or `site:x.com "@handle" topic`. Snippets often contain the full tweet text, view counts, and reply previews.
+  2. **ThreadReaderApp** — if you have a specific status URL (`x.com/<user>/status/<id>`), try `https://threadreaderapp.com/thread/<id>.html` for the unrolled thread.
+  3. **Third-party coverage** — founder interviews, podcast transcripts, blog posts, and LinkedIn typically contain the substantive ideas. X is the amplification channel; the signal is usually elsewhere.
+- Quote tweets verbatim only when sourced from a snippet that clearly shows the full text. If you only have a partial snippet, paraphrase and note the source, don't fabricate the rest.
+- In Gaps, note "x.com fetch returned 402; tweet content sourced from Google snippets" so readers know how to verify.
+
 ---
 
 ## Step 4: Round 3 — Targeted Follow-Up (only if critical gaps remain)
