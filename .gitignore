@@ -5,3 +5,8 @@ docs/research/
 site/node_modules/
 site/dist/
 site/.astro/
+
+# Root-level node artefacts from ad-hoc tooling (not part of the framework)
+node_modules/
+package.json
+package-lock.json
